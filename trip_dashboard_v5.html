@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timofeyev Family — Italy & France 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f9f7;color:#1a1a1a;padding:16px;font-size:15px;max-width:900px;margin:0 auto}
+h1{font-size:20px;font-weight:600;margin-bottom:2px}
+.trip-sub{font-size:13px;color:#666;margin-bottom:18px}
+.main-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.mtab{font-size:12px;font-weight:500;padding:6px 13px;border-radius:20px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:all .15s}
+.mtab.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.mpane{display:none}.mpane.on{display:block}
+.day-nav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.day-btn{font-size:11px;font-weight:500;padding:5px 10px;border-radius:14px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer;text-align:center;line-height:1.3;transition:all .15s}
+.day-btn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.dpane{display:none}.dpane.on{display:block}
+.day-hdr{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee}
+.day-num{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#999;margin-bottom:3px}
+.day-title{font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.2}
+.day-sub{font-size:13px;color:#666;margin-top:3px}
+.lbar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.lchip{font-size:11px;font-weight:500;padding:3px 9px;border-radius:4px}
+.lchip.move{background:#dbeafe;color:#1e40af}.lchip.stay{background:#dcfce7;color:#166534}.lchip.warn{background:#fef3c7;color:#92400e}.lchip.book{background:#fee2e2;color:#991b1b}.lchip.rest{background:#ede9fe;color:#5b21b6}
+.block{border:1px solid #e8e8e4;border-radius:10px;overflow:hidden;margin-bottom:8px}
+.block-hd{display:flex;align-items:center;gap:8px;padding:10px 13px;cursor:pointer;background:#fff}
+.block-hd:hover{background:#f9f9f7}
+.ttime{font-size:12px;font-weight:600;color:#999;min-width:48px;flex-shrink:0}
+.tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;flex-shrink:0;letter-spacing:.03em}
+.tag.gem{background:#d1fae5;color:#065f46}.tag.iconic{background:#ede9fe;color:#4c1d95}.tag.food{background:#fef3c7;color:#78350f}.tag.transit{background:#f3f4f6;color:#374151}.tag.warn{background:#fee2e2;color:#991b1b}.tag.conf{background:#dcfce7;color:#166534}
+.btitle{font-size:14px;font-weight:500;color:#1a1a1a;flex:1;line-height:1.3}
+.chev{margin-left:auto;font-size:11px;color:#aaa;transition:transform .2s;flex-shrink:0}
+.chev.open{transform:rotate(180deg)}
+.block-body{border-top:1px solid #f0f0ec;padding:10px 13px;font-size:13px;color:#555;line-height:1.65;display:none}
+.block-body.open{display:block}
+.block-body p{margin-bottom:6px}.block-body p:last-child{margin-bottom:0}
+.block-body strong{color:#1a1a1a;font-weight:600}
+.avoid{font-size:12px;color:#991b1b;margin-top:8px;padding:6px 10px;border-left:2px solid #ef4444;background:#fef2f2;line-height:1.5}
+.tip{font-size:12px;color:#1e40af;margin-top:8px;padding:6px 10px;border-left:2px solid #3b82f6;background:#eff6ff;line-height:1.5}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#999;margin-bottom:8px;margin-top:16px}
+.sec-label:first-child{margin-top:0}
+.card{background:#fff;border:1px solid #e8e8e4;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid #f5f5f3;font-size:13px}
+.row:last-child{border-bottom:none}
+.row .l{color:#666}.row .r{color:#1a1a1a;font-weight:500;text-align:right;flex-shrink:0}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;flex-shrink:0}
+.b-green{background:#dcfce7;color:#166534}.b-red{background:#fee2e2;color:#991b1b}.b-amber{background:#fef3c7;color:#92400e}.b-blue{background:#dbeafe;color:#1e40af}.b-gray{background:#f3f4f6;color:#374151}
+.bk-card{background:#fff;border:1px solid #e8e8e4;border-radius:8px;padding:10px 13px;margin-bottom:6px}
+.bk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}
+.bk-name{font-size:13px;font-weight:600;color:#1a1a1a}
+.bk-detail{font-size:12px;color:#666;line-height:1.5}
+.bk-head{font-size:11px;font-weight:600;color:#999;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;margin-top:14px}
+.bk-head:first-child{margin-top:0}
+.action-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f5f5f3}
+.action-item:last-child{border-bottom:none}
+.adot{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:1px;font-weight:600}
+.adot.done{background:#dcfce7;color:#166534}.adot.red{background:#fee2e2;color:#991b1b}.adot.amber{background:#fef3c7;color:#92400e}
+.atext{flex:1;font-size:13px;color:#1a1a1a;line-height:1.4}
+.asub{font-size:11px;color:#666;margin-top:2px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:18px}
+.metric{background:#f9f9f7;border-radius:8px;padding:12px 14px;border:1px solid #eee}
+.metric .label{font-size:11px;color:#666;margin-bottom:3px}
+.metric .val{font-size:22px;font-weight:600;color:#1a1a1a;line-height:1}
+.metric .sub{font-size:11px;color:#999;margin-top:2px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.blabel{font-size:12px;color:#666;width:110px;flex-shrink:0;text-align:right}
+.btrack{flex:1;height:10px;background:#f3f4f6;border-radius:5px;overflow:hidden}
+.bfill{height:100%;border-radius:5px}
+.bval{font-size:12px;font-weight:600;color:#1a1a1a;width:70px;flex-shrink:0}
+.total-box{background:#f9f9f7;border-radius:10px;padding:14px 16px;margin-top:4px;border:1px solid #eee}
+.trow{display:flex;justify-content:space-between;font-size:13px;color:#666;padding:4px 0}
+.trow.big{font-size:15px;font-weight:600;color:#1a1a1a;border-top:1px solid #ddd;margin-top:6px;padding-top:10px}
+.trow .r{font-weight:500;color:#1a1a1a}.trow.big .r{font-size:18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tc{background:#fff;border:1px solid #e8e8e4;border-radius:8px;padding:10px 13px}
+.tc-title{font-size:12px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.tc-body{font-size:12px;color:#666;line-height:1.55}
+.rest-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:4px}
+.rest-table th{text-align:left;font-size:10px;font-weight:600;color:#999;padding:5px 8px;border-bottom:1px solid #eee;text-transform:uppercase;letter-spacing:.05em}
+.rest-table td{padding:8px;border-bottom:1px solid #f5f5f3;color:#666;vertical-align:top;font-size:12px}
+.rest-table tr:last-child td{border-bottom:none}
+.rest-table td:first-child{color:#1a1a1a;font-weight:600}
+.callout{border-left:3px solid #6366f1;background:#eef2ff;padding:8px 12px;font-size:12px;color:#3730a3;line-height:1.6;margin-bottom:10px;border-radius:0 6px 6px 0}
+.divider{height:1px;background:#f0f0ec;margin:4px 0 16px}
+.app-dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:16px}
+.app-dl-card{background:#fff;border:2px solid #6366f1;border-radius:8px;padding:10px 12px}
+.app-dl-name{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:2px}
+.app-dl-sub{font-size:11px;color:#666;line-height:1.45}
+.app-dl-where{font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px;display:inline-block;margin-top:4px;background:#ede9fe;color:#5b21b6}
+</style>
+</head>
+<body>
+<h1>🇮🇹🇫🇷 Timofeyev Family — Italy & France 2026</h1>
+<p class="trip-sub">June 19–30 · Stanislav, Marina, Anton, Ariana · Milan · Rome · Sorrento · Aix-en-Provence · Bergamo</p>
+
+<div class="main-tabs">
+  <button class="mtab on" onclick="msw('itinerary',this)">Itinerary</button>
+  <button class="mtab" onclick="msw('bookings',this)">All bookings</button>
+  <button class="mtab" onclick="msw('restaurants',this)">Restaurants</button>
+  <button class="mtab" onclick="msw('actions',this)">Action items</button>
+  <button class="mtab" onclick="msw('costs',this)">Costs</button>
+  <button class="mtab" onclick="msw('transport',this)">Transport & apps</button>
+</div>
+
+<div id="itinerary" class="mpane on">
+<div class="day-nav">
+  <button class="day-btn on" onclick="dsw('d19',this)">Jun 19<br>Depart</button>
+  <button class="day-btn" onclick="dsw('d20',this)">Jun 20<br>Milan</button>
+  <button class="day-btn" onclick="dsw('d21',this)">Jun 21<br>Rome</button>
+  <button class="day-btn" onclick="dsw('d22',this)">Jun 22<br>Rome</button>
+  <button class="day-btn" onclick="dsw('d23',this)">Jun 23<br>Sorrento</button>
+  <button class="day-btn" onclick="dsw('d24',this)">Jun 24<br>Pompeii</button>
+  <button class="day-btn" onclick="dsw('d25',this)">Jun 25<br>Amalfi</button>
+  <button class="day-btn" onclick="dsw('d26',this)">Jun 26<br>Aix</button>
+  <button class="day-btn" onclick="dsw('d27',this)">Jun 27<br>Aix</button>
+  <button class="day-btn" onclick="dsw('d28',this)">Jun 28<br>Lavender</button>
+  <button class="day-btn" onclick="dsw('d29',this)">Jun 29<br>Bergamo</button>
+  <button class="day-btn" onclick="dsw('d30',this)">Jun 30<br>Home</button>
+</div>
+
+<div id="d19" class="dpane on">
+  <div class="day-hdr"><div class="day-num">Friday · Travel day</div><div class="day-title">Depart St. Louis</div><div class="day-sub">STL → PHL → MXP · overnight flight</div></div>
+  <div class="lbar"><span class="lchip move">✈ AA2720 STL 11:18 → PHL</span><span class="lchip warn">⏱ 5h 21m layover PHL T0→TA</span><span class="lchip move">✈ AA298 PHL 8:00 PM → MXP</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">11:18</span><span class="tag transit">transit</span><div class="btitle">STL → Philadelphia (AA2720, A319)</div><span class="chev">▼</span></div><div class="block-body"><p>2h 21m. Basic Economy — seats assigned at gate. Call AA about family seating. Check in online 24 hrs before. Download all boarding passes offline.</p><div class="tip">Measure carry-on bags packed — automated gate sizers active in 2026.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">14:39</span><span class="tag transit">transit</span><div class="btitle">Philadelphia layover — 5h 21m · terminal change T0→TA</div><span class="chev">▼</span></div><div class="block-body"><p>Terminal connector links T0 and TA — no security re-screen. Eat a proper meal in Terminal A before the overnight leg.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">20:00</span><span class="tag transit">transit</span><div class="btitle">PHL → Milan MXP (AA298 / AY3854, Boeing 787-8)</div><span class="chev">▼</span></div><div class="block-body"><p>8h 5m overnight. Arrives MXP T1 ~10:05 AM Saturday. Neck pillows, eye masks, melatonin for kids.</p></div></div>
+</div>
+
+<div id="d20" class="dpane">
+  <div class="day-hdr"><div class="day-num">Saturday · Day 1 · Italy</div><div class="day-title">Milan — arrival day</div><div class="day-sub">Arrive MXP ~10:05 AM · 1 night · Castello Duomo Milano · Obicà dinner 18:00 ✅</div></div>
+  <div class="lbar"><span class="lchip move">✈ MXP arrives 10:05 AM</span><span class="lchip warn">💶 Withdraw €500–600 at MXP ATM</span><span class="lchip warn">🏠 Check-in 3–11 PM · cash only €350</span><span class="lchip rest">🍽 Obicà 18:00 ✅</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:05</span><span class="tag transit">transit</span><div class="btitle">MXP → Milan · Malpensa Express (€13, 52 min)</div><span class="chev">▼</span></div><div class="block-body"><p>Train from T1 to Milano Centrale every 30 min. Apartment is 12-min walk from Centrale to Foro Buonaparte.</p><div class="tip">Withdraw €500–600 at MXP ATM before boarding the train. You need €350 cash for apartment check-in tonight.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:00</span><span class="tag food">food</span><div class="btitle">Lunch in Brera — Bar Brera or Latteria di San Marco</div><span class="chev">▼</span></div><div class="block-body"><p>10 min north of the Duomo. Milanese panino or risotto milanese.</p><div class="avoid">Avoid: Any restaurant facing the Duomo — triple price, half the quality.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">14:00</span><span class="tag iconic">iconic</span><div class="btitle">Duomo rooftop via elevator (~€15/person)</div><span class="chev">▼</span></div><div class="block-body"><p>Book at duomomilano.it. Gothic spires up close are extraordinary. Then Galleria Vittorio Emanuele II — spin on the bull mosaic.</p><div class="tip">You're jet-lagged. Keep this afternoon light.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">15:00</span><span class="tag transit">transit</span><div class="btitle">Check in · Castello Duomo · cash €350 ready · PIN 1397</div><span class="chev">▼</span></div><div class="block-body"><p>Foro Buonaparte. Cash only — €329 + €19 city tax. Conf #5000757614.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:00</span><span class="tag gem">hidden gem</span><div class="btitle">Castello Sforzesco + Parco Sempione</div><span class="chev">▼</span></div><div class="block-body"><p>Next door to the apartment. Free courtyard. Walk into Parco Sempione — kids can run, castle tower views. Perfect jet-lag decompression.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">18:00</span><span class="tag conf">confirmed ✅</span><div class="btitle">🍽️ Obicà Mozzarella Bar · La Rinascente 6F · Res #1719477729</div><span class="chev">▼</span></div><div class="block-body"><p><strong>Address:</strong> Piazza del Duomo, 6th floor food hall, La Rinascente.<br>Rooftop terrace with direct Duomo views at sunset. Mozzarella-focused menu — burrata, buffalo mozzarella, light pasta, Campanian wines. Perfect for an arrival evening.</p><div class="tip">Arrive right at 18:00 for the best sunset light on the Duomo.</div></div></div>
+</div>
+
+<div id="d21" class="dpane">
+  <div class="day-hdr"><div class="day-num">Sunday · Day 2 · Italy</div><div class="day-title">Milan → Rome</div><div class="day-sub">Frecciarossa 09:35 → 12:39 · La Panetteria lunch · Private tour 17:00–20:00 · 2 nights</div></div>
+  <div class="lbar"><span class="lchip move">🚄 FR9617 09:35–12:39 · Coach 5 · 10A–11B</span><span class="lchip stay">🏨 Trevi Elite · Via delle Muratte 87 · breakfast incl.</span><span class="lchip rest">🍽 La Panetteria lunch · 🗺 Private tour 17:00–20:00 €270</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">9:35</span><span class="tag transit">transit</span><div class="btitle">Frecciarossa to Rome — Coach 5, 10A–11B · PNR BMFJP5</div><span class="chev">▼</span></div><div class="block-body"><p>3h 4m through Tuscany. Café car for coffee and cornetti. QR codes saved offline.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:39</span><span class="tag transit">transit</span><div class="btitle">Roma Termini → drop bags at hotel → La Panetteria</div><span class="chev">▼</span></div><div class="block-body"><p>18-min walk to Trevi Elite (Via delle Muratte 87). Drop bags — check-in is 2 PM, they'll store them. Then a 5-min walk to <strong>La Panetteria</strong> for a quick, cheap, authentic lunch. €10 pasta with water, coffee and bread. Done by 14:30 with full energy saved for the 5 PM tour. No reservation needed.</p><div class="tip">Don't linger at the hotel. Drop bags and go straight to lunch — you have a long afternoon ahead.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">14:30</span><span class="tag iconic">iconic</span><div class="btitle">Trevi Fountain · Pantheon exterior · Piazza Navona</div><span class="chev">▼</span></div><div class="block-body"><p>Trevi is 50 steps from the hotel. Visit now and again at 7 AM tomorrow. Guide handles Pantheon tickets tonight — just admire the exterior. Piazza Navona and Campo de' Fiori for the afternoon.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:00</span><span class="tag conf">confirmed ✅</span><div class="btitle">🗺️ Guided walking tour — includes Pantheon tickets</div><span class="chev">▼</span></div><div class="block-body"><p>5–8 PM. Guide handles Pantheon entry — no need to buy separate tickets.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">20:15</span><span class="tag food">food</span><div class="btitle">Dinner near Trevi — ask the guide first</div><span class="chev">▼</span></div><div class="block-body"><p>After the tour ends at 8 PM, ask the guide for a dinner recommendation — they'll know exactly where to go and can often walk you there. This is the best possible restaurant tip you'll get.<br><br>If the guide doesn't suggest anything: <strong>Piccolo Arancio</strong> (Via Scanderberg 112, 5 min walk) — family-owned by Mara and Carlo, good Roman classics, spicy sauté of clams and mussels is a standout, open Sunday evenings. Or <strong>Osteria dell'Ingegno</strong> (Via del Pozzo delle Cornacchie 45) — 5 min walk, relaxed, good pasta.</p><div class="tip">Don't pre-book Sunday dinner. Ask the guide first, then walk to Piccolo Arancio if needed. Sunday at 8 PM near Trevi will have tables available.</div></div></div>
+</div>
+
+<div id="d22" class="dpane">
+  <div class="day-hdr"><div class="day-num">Monday · Day 3 · Italy</div><div class="day-title">Rome — full day</div><div class="day-sub">Trevi sunrise · Colosseum 10:30 ✅ · Forum · Aventine gems · Da Teo 19:30 ✅</div></div>
+  <div class="lbar"><span class="lchip rest">🏛 Colosseum 10:30 ✅ Ref GPCOE36Q5V56ZN3K</span><span class="lchip warn">🎒 Small bags only — no backpacks or trolleys</span><span class="lchip rest">🍽 Da Teo 19:30 ✅</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">7:00</span><span class="tag iconic">iconic</span><div class="btitle">Trevi Fountain at sunrise — golden light, almost empty</div><span class="chev">▼</span></div><div class="block-body"><p>15 people instead of 500. This is the photograph. Then breakfast at any neighborhood bar — cornetto + cappuccino standing at the counter.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:15</span><span class="tag conf">confirmed ✅</span><div class="btitle">🏛️ Colosseum · arrive 15 min early · Ref GPCOE36Q5V56ZN3K</div><span class="chev">▼</span></div><div class="block-body"><p><strong>Entry: 10:30 AM · 75 min visiting time · English educational tour included</strong><br><br>Stanislav €18+€8 · Marina €18+€8 · Anton FREE+€8 · Ariana FREE+€8 = €68 total<br>Includes: Colosseum 1st & 2nd levels · Roman Forum · Palatine Hill · Imperial Fora<br>NOT included: Arena floor · Underground · Attic<br><br>Show passports at entry for all 4. One-way route. Toilets only at the start — go before entering.</p><div class="avoid">No backpacks, trolleys, or glass bottles. Small day bag only.</div><div class="tip">After 75-min Colosseum, Roman Forum and Palatine Hill are on same 24H ticket — enter at your own pace.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:00</span><span class="tag iconic">iconic</span><div class="btitle">Roman Forum + Palatine Hill</div><span class="chev">▼</span></div><div class="block-body"><p>Walk directly into the Forum. Temple of Vesta, Arch of Titus, Via Sacra. Palatine Hill above for aerial views. Exit south toward Circus Maximus.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">13:00</span><span class="tag food">food</span><div class="btitle">Lunch — Testaccio · Mercato di Testaccio or Flavio</div><span class="chev">▼</span></div><div class="block-body"><p>Mercato closes 2:30 PM — supplì, pizza, pasta at stalls. Or Flavio al Velavevodetto for sit-down cacio e pepe.</p><div class="tip">Real Roman carbonara: egg yolk, guanciale, Pecorino, black pepper. No cream. Ever.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">15:00</span><span class="tag gem">hidden gem</span><div class="btitle">Aventine Hill — Knights of Malta Keyhole + Orange Garden</div><span class="chev">▼</span></div><div class="block-body"><p><strong>Knights of Malta Keyhole:</strong> look through and see St. Peter's dome framed through three countries. Free, 2-min queue.<br><strong>Giardino degli Aranci:</strong> free orange garden, best aerial view of Rome. Kids on grass.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:30</span><span class="tag gem">hidden gem</span><div class="btitle">Circus Maximus at golden hour — free, uncrowded</div><span class="chev">▼</span></div><div class="block-body"><p>Ancient chariot-racing stadium. 250,000 spectators once filled this space. Kids can run the full length.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">19:30</span><span class="tag conf">confirmed ✅</span><div class="btitle">🍽️ Da Teo · Piazza dei Renzi · Teodoro Filippini</div><span class="chev">▼</span></div><div class="block-body"><p>Small piazza in Trastevere. Genuine local crowd, outdoor tables. Cash only. Excellent cacio e pepe, amatriciana, carbonara. First seating — restaurant opens at 19:30.</p><div class="tip">Pack bags tonight. Train 10:51 AM tomorrow. Check out by 9:30 AM — 18-min walk or €8 taxi to Termini.</div></div></div>
+</div>
+
+<div id="d23" class="dpane">
+  <div class="day-hdr"><div class="day-num">Tuesday · Day 4 · Italy</div><div class="day-title">Rome → Naples → Sorrento</div><div class="day-sub">Train 10:51 · Pizza in Naples · Campania Express 14:26 · Taverna Azzurra 19:00</div></div>
+  <div class="lbar"><span class="lchip move">🚄 FR9604 Roma 10:51 → Napoli 12:03</span><span class="lchip move">🚂 Campania Express 14:26 → Sorrento 15:35</span><span class="lchip rest">🍽 Taverna Azzurra 19:00 — book now</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:51</span><span class="tag transit">transit</span><div class="btitle">Frecciarossa to Naples — Coach 6, 12A–13B · PNR CNEQV5</div><span class="chev">▼</span></div><div class="block-body"><p>1h 12m. Arrive Napoli Centrale 12:03.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:10</span><span class="tag iconic">iconic</span><div class="btitle">Naples — pizza is mandatory · 2 hrs in the city</div><span class="chev">▼</span></div><div class="block-body"><p><strong>L'Antica Pizzeria da Michele</strong> (10 min, Margherita or Marinara only, queue moves fast) or <strong>Pizzeria di Matteo</strong> (15 min through Spaccanapoli).</p><div class="tip">Margherita: tomato, mozzarella fior di latte, basil. That's it. Don't ask for toppings.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">14:26</span><span class="tag transit">transit</span><div class="btitle">Campania Express → Sorrento · Coach 1, seats 13–16 · Ref 468806</div><span class="chev">▼</span></div><div class="block-body"><p>P. Garibaldi lower level. Be there by 14:00. Round trip included — keep QR code.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">15:35</span><span class="tag transit">transit</span><div class="btitle">Arrive Sorrento · check in Suite Old Town · PIN 2843</div><span class="chev">▼</span></div><div class="block-body"><p>Host at Via degli Archi 9 (+39 333 986 7166). Conf #5520291571. Check-in 3–7 PM. Explore old town, Bar Ercolano for granita di limone.</p><div class="tip">Grocery run tonight at Conad/Sisa — stock kitchen for breakfasts and day trips.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">19:00</span><span class="tag conf">confirmed ✅</span><div class="btitle">🍽️ Taverna Azzurra · Via Marina Grande 166 · confirmed ✅</div><span class="chev">▼</span></div><div class="block-body"><p>Family-run beachfront since 1930. Tables on the water at Marina Grande. Views of harbor and Mount Vesuvius. Specialty: fresh seafood, handmade pasta.<br><br><strong>Must order:</strong> Crab ravioli with granseola, spaghetti allo scoglio, mixed fried fish.<br><strong>Book:</strong> tavernaazzurrasorrento.com or +39 081 877 2510 · ask for Vesuvius-view table<br><strong>Getting there:</strong> Walk down scenic steps from old town (~15 min) or taxi (~€8)</p><div class="tip">On a clear June evening, watching Vesuvius over the water from the beach terrace is one of the best dinner settings on the Sorrentine Peninsula.</div></div></div>
+</div>
+
+<div id="d24" class="dpane">
+  <div class="day-hdr"><div class="day-num">Wednesday · Day 5 · Italy</div><div class="day-title">Private Boat Tour — Amalfi Coast</div><div class="day-sub">9:30 AM–5:30 PM · Positano · Amalfi · swimming · snorkeling · food & drinks · €750</div></div>
+  <div class="lbar"><span class="lchip rest">⛵ Private boat 9:30–17:30 · €750 total</span><span class="lchip stay">🏊 Swimming + snorkeling incl.</span><span class="lchip stay">🍹 Food + drinks incl.</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:30</span><span class="tag food">food</span><div class="btitle">Light breakfast + pack for the boat</div><span class="chev">▼</span></div><div class="block-body"><p>Food and drinks provided on board — eat light before departure. Pack: swimwear, towels, SPF50 sunscreen, hat, sunglasses, change of clothes. Leave heavy bags at the apartment.</p><div class="tip">Sun on open water is far more intense than on land. SPF50 and reapply every 90 min — especially for the kids.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">9:30</span><span class="tag conf">confirmed ✅</span><div class="btitle">⛵ Private boat departs · confirm pickup point with operator</div><span class="chev">▼</span></div><div class="block-body"><p>Confirm whether departure is from <strong>Marina Piccola</strong> or <strong>Marina Grande</strong> in Sorrento — both are a short walk or taxi from Via degli Archi. Private boat means your own pace, no crowds, and the ability to anchor anywhere along the coast.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:30</span><span class="tag iconic">iconic</span><div class="btitle">Positano — arrive by sea · swim · explore</div><span class="chev">▼</span></div><div class="block-body"><p>Arriving in Positano by private boat is extraordinary — anchor offshore, swim in clear water looking up at the cliff-face of pastel houses. Go ashore to walk the vertical lanes, buy a lemon granita, see the Church of Santa Maria Assunta (Byzantine icon inside, free).</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">13:00</span><span class="tag food">food</span><div class="btitle">Lunch on board + snorkeling stop</div><span class="chev">▼</span></div><div class="block-body"><p>Complimentary food and drinks served on board. Boat likely anchors in a quiet cove between Positano and Amalfi for the clearest water — away from the ferry routes. Best snorkeling of the trip.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">15:00</span><span class="tag iconic">iconic</span><div class="btitle">Amalfi — Cathedral + Museo della Carta</div><span class="chev">▼</span></div><div class="block-body"><p>Cathedral of Sant'Andrea — stunning Romanesque facade and crypt. Museo della Carta (€4, 20 min) — Amalfi invented European paper-making in the 12th century, kids can make their own sheet of paper. Walk the staircase streets behind the cathedral.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:30</span><span class="tag transit">transit</span><div class="btitle">Return to Sorrento · light dinner in old town</div><span class="chev">▼</span></div><div class="block-body"><p>After a full day on the water the family will be happily tired. Keep dinner simple — any good trattoria in the old town away from Via Tasso, or use the kitchen at the apartment.</p></div></div>
+</div>
+
+<div id="d25" class="dpane">
+  <div class="day-hdr"><div class="day-num">Thursday · Day 6 · Italy</div><div class="day-title">Lemon Path + Sorrento</div><div class="day-sub">Morning: bus to Sant'Agata → walk back through lemon groves · rest of day play by ear</div></div>
+  <div class="lbar"><span class="lchip stay">🍋 Path of Lemons morning</span><span class="lchip stay">🌿 Giardini di Cataldo option</span><span class="lchip warn">☀ Go early before the heat</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:00</span><span class="tag gem">hidden gem</span><div class="btitle">SITA bus to Sant'Agata → walk back through lemon groves</div><span class="chev">▼</span></div><div class="block-body"><p>Take the SITA bus from Piazza Tasso up to Sant'Agata sui Due Golfi (~20–30 min, a couple of euros). From there walk downhill ~5 km through the real Sorrentine countryside — lemon groves, olive trees, vineyards, small villages, the scent of Sfusato lemons everywhere. ~2 hrs mostly downhill, arriving back in Sorrento mid-morning.</p><div class="tip">Sant'Agata means "above both gulfs" — from the top you see the Gulf of Naples and Gulf of Salerno simultaneously. Go early before the heat. This is the direction locals recommend: always uphill by bus, downhill on foot.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:30</span><span class="tag gem">hidden gem</span><div class="btitle">Optional: Giardini di Cataldo — working lemon farm in Sorrento</div><span class="chev">▼</span></div><div class="block-body"><p>A working lemon farm right in Sorrento on Via Fuorimura — 10-min walk from the apartment. Walk through traditional pergola-covered lemon terraces (the characteristic Sorrentine cultivation style), learn how limoncello is made, and do a tasting. 30–45 min, flat pathways, family-friendly for any age. Small entry fee.</p><div class="tip">The Sfusato Sorrentino lemons here are enormous, thin-skinned, and almost sweet. The smell inside the pergola is extraordinary.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:00</span><span class="tag food">food</span><div class="btitle">Lunch + afternoon — play it by ear</div><span class="chev">▼</span></div><div class="block-body"><p>The afternoon is open. Options depending on energy levels:<br>— Beach at <strong>Marina Grande</strong> (walking distance) — the fishing village has a small sandy beach and good seafood restaurants<br>— Explore <strong>Sorrento old town</strong> for shopping, ceramics, limoncello<br>— Rest at the apartment with the kitchen — after a boat day and a hike, this is also a legitimate answer<br>— Final gelato at <strong>Bar Ercolano</strong> on Piazza Tasso</p><div class="tip">Last full evening in Italy. Pack bags tonight — checkout is 8–10 AM tomorrow. Arrange luggage storage with the host tonight.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">19:30</span><span class="tag food">food</span><div class="btitle">Last dinner in Italy — Sorrento</div><span class="chev">▼</span></div><div class="block-body"><p>Keep it local and relaxed. L'Antica Trattoria (Via Padre Reginaldo Giuliani 33) or any trattoria in the old town with a handwritten menu and no English touts outside.</p></div></div>
+</div>
+
+<div id="d26" class="dpane">
+  <div class="day-hdr"><div class="day-num">Friday · Day 7 · Italy → France</div><div class="day-title">Sorrento → Naples → Marseille → Aix</div><div class="day-sub">Shuttle 12:00 · FR6471 16:45 → MRS 18:30 · Navette to Aix ~20:30</div></div>
+  <div class="lbar"><span class="lchip move">🚌 Curreri 12:00 · Piazza Giovanni B. de Curtis</span><span class="lchip move">✈ FR6471 NAP 16:45 → MRS 18:30</span><span class="lchip move">🚌 Navette MRS → Aix ~€10/person</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:00</span><span class="tag transit">transit</span><div class="btitle">Checkout + luggage storage + final Sorrento walk</div><span class="chev">▼</span></div><div class="block-body"><p>Store bags with host. Final espresso, morning market, last granita di limone at Bar Ercolano.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">11:45</span><span class="tag transit">transit</span><div class="btitle">Curreri shuttle · Ref 195841-P1ZJAQ-I · show PDF to driver</div><span class="chev">▼</span></div><div class="block-body"><p>Be at Piazza Giovanni B. de Curtis by 11:45. ~1.5 hrs to Naples Airport.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">13:30</span><span class="tag transit">transit</span><div class="btitle">Naples Airport · Ryanair FR6471 check-in · 100ml rule</div><span class="chev">▼</span></div><div class="block-body"><p>Bag drop closes 16:05. 2.5+ hrs buffer. Ryanair boarding passes offline on phone.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">18:30</span><span class="tag transit">transit</span><div class="btitle">Arrive MRS → Navette shuttle → Hôtel Rotonde Aix</div><span class="chev">▼</span></div><div class="block-body"><p>Navette every 20–30 min, ~€10/person, ~45 min. Drops at La Rotonde, 300m from hotel. Conf SWG8AK, PIN 39763. €908 + €19.62 tax at check-in. Uber also available (~€41, faster).</p></div></div>
+</div>
+
+<div id="d27" class="dpane">
+  <div class="day-hdr"><div class="day-num">Saturday · Day 8 · France</div><div class="day-title">Aix-en-Provence on foot</div><div class="day-sub">Saturday market · Quartier Mazarin · Atelier Cézanne · fountains</div></div>
+  <div class="lbar"><span class="lchip warn">🛒 Market closes noon — go early</span><span class="lchip stay">🚶 Entirely walkable from hotel</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:30</span><span class="tag iconic">iconic</span><div class="btitle">Saturday market — Place Richelme + neighboring squares</div><span class="chev">▼</span></div><div class="block-body"><p>Place Richelme (produce first), Place des Prêcheurs, Place de la Madeleine (flowers). Buy calisson d'Aix, olives, strawberries. Buy Monoprix picnic supplies for lavender day tomorrow.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">10:00</span><span class="tag iconic">iconic</span><div class="btitle">Cours Mirabeau + Quartier Mazarin</div><span class="chev">▼</span></div><div class="block-body"><p>One coffee at Café Les Deux Garçons (1792, Cézanne's table). Then explore Quartier Mazarin — 17th-century aristocratic grid, Fontaine des Quatre Dauphins (1667).</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">14:30</span><span class="tag gem">hidden gem</span><div class="btitle">Atelier Cézanne — studio unchanged (€7.50)</div><span class="chev">▼</span></div><div class="block-body"><p>His coat on the peg, his pipe on the table, Sainte-Victoire through the window. The view he painted 60+ times.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:00</span><span class="tag gem">hidden gem</span><div class="btitle">Fountain walk · Place d'Albertas · golden hour</div><span class="chev">▼</span></div><div class="block-body"><p>Hidden Baroque square almost no visitors find. Thermal fountains warm to the touch.</p><div class="tip">Book Uber Reserve tonight for 8:00–8:15 AM tomorrow to Aix TGV station. Apple Pay works.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">19:30</span><span class="tag food">food</span><div class="btitle">Dinner — Les Galinas (Bib Gourmand) or Le Patio · TheFork</div><span class="chev">▼</span></div><div class="block-body"><p><strong>Les Galinas:</strong> Bib Gourmand, bistronomic Provençal, "grandma's cooking with refinement."<br><strong>Le Patio:</strong> Hidden courtyard in old town, seasonal market cuisine.</p></div></div>
+</div>
+
+<div id="d28" class="dpane">
+  <div class="day-hdr"><div class="day-num">Sunday · Day 9 · France</div><div class="day-title">Lavender + Gorges du Verdon</div><div class="day-sub">Enterprise 9:00 AM · Valensole · Moustiers · Gorges · Monoprix picnic</div></div>
+  <div class="lbar"><span class="lchip move">🚗 Uber to Aix TGV ~8:15 · Enterprise pickup 9:00</span><span class="lchip warn">🪪 Costco card + 2 credit cards + license</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:15</span><span class="tag transit">transit</span><div class="btitle">Uber Reserve to Aix TGV station · Enterprise Ref C488937384</div><span class="chev">▼</span></div><div class="block-body"><p>Pre-booked Uber Reserve. TGV station 15 km from hotel. Enterprise opens 9 AM. Bring Costco card, 2 credit cards, driving license.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">9:30</span><span class="tag iconic">iconic</span><div class="btitle">Valensole lavender plateau — peak bloom late June</div><span class="chev">▼</span></div><div class="block-body"><p>1 hr east on D4096. 3,000 hectares of purple to the horizon. Walk the rows, buy honey and lavender sachets directly from farmers.</p><div class="tip">Morning light is best. By noon it bleaches out.</div></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">11:00</span><span class="tag food">food</span><div class="btitle">Monoprix picnic in the lavender fields</div><span class="chev">▼</span></div><div class="block-body"><p>Baguette, Provence chèvre, charcuterie, cherries from Saturday market, local rosé (€5–8). ~€20 total. One of the best meals of the trip.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">12:30</span><span class="tag gem">hidden gem</span><div class="btitle">Moustiers-Sainte-Marie · Gorges du Verdon</div><span class="chev">▼</span></div><div class="block-body"><p><strong>Moustiers:</strong> medieval village in the cliff, star on a chain across the gorge (1387). <strong>Gorges du Verdon:</strong> Europe's largest canyon, 700m deep. Drive Route des Crêtes (D23) — 15 km of viewpoints. No hiking needed.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">17:00</span><span class="tag food">food</span><div class="btitle">Return to Aix · Les Grandes Gueules dinner (Bib Gourmand)</div><span class="chev">▼</span></div><div class="block-body"><p>Three young chefs, monthly menu based on fresh local products, very local crowd. TheFork.</p><div class="tip">Drop Enterprise at MRS by 18:30 tomorrow. Confirm plan tonight.</div></div></div>
+</div>
+
+<div id="d29" class="dpane">
+  <div class="day-hdr"><div class="day-num">Monday · Day 10 · France → Italy</div><div class="day-title">Les Calanques + Cassis → Bergamo</div><div class="day-sub">Morning coast · Drop car by 18:30 · FR1852 21:05 → BGY 22:15 · Botta 9</div></div>
+  <div class="lbar"><span class="lchip warn">⏱ Drop Enterprise at MRS by 18:30</span><span class="lchip move">✈ FR1852 MRS 21:05 → BGY 22:15</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">8:30</span><span class="tag gem">hidden gem</span><div class="btitle">Les Calanques boat tour from Cassis (~€20/adult)</div><span class="chev">▼</span></div><div class="block-body"><p>30-min drive from Aix. UNESCO limestone fjords — vertical white cliffs, turquoise water. 2-hr tour, tickets at Cassis port.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">11:00</span><span class="tag food">food</span><div class="btitle">Lunch in Cassis — seafood + Cassis AOC white wine</div><span class="chev">▼</span></div><div class="block-body"><p>The Cassis AOC white wine is exceptional — not the rosé, the whites here are remarkable. Oursins (sea urchin) if available.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">13:00</span><span class="tag gem">hidden gem</span><div class="btitle">Cap Canaille — highest sea cliff in France (416m)</div><span class="chev">▼</span></div><div class="block-body"><p>View back over Cassis, the calanques, and Marseille. 5-min walk from parking.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">15:00</span><span class="tag transit">transit</span><div class="btitle">Drive to MRS airport · drop Enterprise by 18:30 · then relax</div><span class="chev">▼</span></div><div class="block-body"><p>Cassis to MRS ~35–40 min. Leave by 15:00, arrive by 16:00. Drop car, check in Ryanair, eat at airport. 100ml rule at MRS.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">21:05</span><span class="tag transit">transit</span><div class="btitle">FR1852 → BGY 22:15 · taxi to Botta 9 · self check-in PIN 6931</div><span class="chev">▼</span></div><div class="block-body"><p>Airport taxi at BGY arrivals (~€20, 20 min). Or itTaxi app to pre-book. Self check-in. Conf #6301847042.<div class="tip">GoOpti pickup 9:30 AM tomorrow — be ready with bags.</div></p></div></div>
+</div>
+
+<div id="d30" class="dpane">
+  <div class="day-hdr"><div class="day-num">Tuesday · Day 11 · Home</div><div class="day-title">Bergamo → MXP → St. Louis</div><div class="day-sub">GoOpti 9:30 AM · MXP 11:00 · AY3855 14:20 · Home by midnight</div></div>
+  <div class="lbar"><span class="lchip move">🚐 GoOpti 9:30 · Ref 3CW32747</span><span class="lchip move">✈ AY3855 MXP 14:20 → PHL → STL</span></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">7:00</span><span class="tag gem">hidden gem</span><div class="btitle">Optional: Bergamo Città Alta — 1 hr before GoOpti</div><span class="chev">▼</span></div><div class="block-body"><p>Funicular from 7 AM. Piazza Vecchia — one of Italy's finest Renaissance squares. Walk UNESCO Venetian walls. Cornetto at Pasticceria Zanini, coffee at Bar del Tasso. If exhausted after 10 days, sleep instead.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">9:30</span><span class="tag transit">transit</span><div class="btitle">GoOpti pickup · MXP T1 ~11:00 · Ref 3CW32747</div><span class="chev">▼</span></div><div class="block-body"><p>Bags ready at Via Don Carlo Botta 9. Driver number sent 1 hr before.</p></div></div>
+  <div class="block"><div class="block-hd" onclick="tog(this)"><span class="ttime">11:00</span><span class="tag transit">transit</span><div class="btitle">MXP T1 — check in AY3855 · 3+ hrs before flight</div><span class="chev">▼</span></div><div class="block-body"><p>MXP T1 uses 2L liquids rule — full-size limoncello, olive oil, wine all fine in carry-on. Final Italian meal at terminal. Board ~13:40.<div class="tip">MXP → PHL ~8 hrs. Customs at PHL on arrival — 4h 54m layover covers it comfortably.</div></p></div></div>
+</div>
+</div>
+
+<!-- BOOKINGS TAB -->
+<div id="bookings" class="mpane">
+  <div class="bk-head">Flights</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">AA/Finnair STL → MXP → STL · 4 pax</div><span class="badge b-green">$3,076 paid</span></div><div class="bk-detail">Jun 19–30 · Basic Economy · AA: <span style="font-family:monospace">HGSPIM</span> · Finnair: <span style="font-family:monospace">8MZOLA</span> · AAdvantage: <span style="font-family:monospace">AY 7468****</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Ryanair Naples → Marseille · FR6471</div><span class="badge b-green">$521 paid</span></div><div class="bk-detail">Jun 26 · 16:45–18:30 · Family Plus · Ref: <span style="font-family:monospace">L3G8XA</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Ryanair Marseille → Bergamo · FR1852</div><span class="badge b-green">$287 paid</span></div><div class="bk-detail">Jun 29 · 21:05–22:15 · Family Plus · Ref: <span style="font-family:monospace">D2PZMN</span></div></div>
+  <div class="bk-head">Hotels</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Castello Duomo Milano · Milan</div><span class="badge b-amber">€329 cash at check-in</span></div><div class="bk-detail">Jun 20–21 · 1 night · PIN 1397 · cash only · city tax €19 · Ref: <span style="font-family:monospace">#5000757614</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Trevi Elite Rome</div><span class="badge b-green">€636 paid</span></div><div class="bk-detail">Jun 21–23 · 2 nights · PIN 9772 · breakfast incl. · city tax €40 · Ref: <span style="font-family:monospace">#5764211469</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Suite Old Town Sorrento · Via degli Archi 9</div><span class="badge b-green">€1,153 paid</span></div><div class="bk-detail">Jun 23–26 · 3 nights · PIN 2843 · kitchen · city tax €24 · +39 333 986 7166 · Ref: <span style="font-family:monospace">#5520291571</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Hôtel Rotonde Aix · 15 Ave des Belges</div><span class="badge b-amber">€908 at check-in</span></div><div class="bk-detail">Jun 26–29 · 3 nights · PIN 39763 · city tax €19.62 · free cancel until Jun 25 · Ref: <span style="font-family:monospace">SWG8AK</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Botta 9 · Via Don Carlo Botta · Bergamo</div><span class="badge b-green">€198 paid</span></div><div class="bk-detail">Jun 29–30 · 1 night · PIN 6931 · self check-in ✓ · checkout 7–10 AM · Ref: <span style="font-family:monospace">#6301847042</span></div></div>
+  <div class="bk-head">Rail</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Frecciarossa 9617 · Milan → Rome</div><span class="badge b-green">€95 paid</span></div><div class="bk-detail">Jun 21 · 09:35–12:39 · Coach 5 · 10A 10B 11A 11B · PNR: <span style="font-family:monospace">BMFJP5</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Frecciarossa 9604 · Rome → Naples</div><span class="badge b-green">€48 paid</span></div><div class="bk-detail">Jun 23 · 10:51–12:03 · Coach 6 · 12A 12B 13A 13B · PNR: <span style="font-family:monospace">CNEQV5</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Campania Express · Naples → Sorrento · round trip</div><span class="badge b-green">€60 paid</span></div><div class="bk-detail">Jun 23 · 14:26–15:35 · Coach 1 · seats 13–16 · Ref: <span style="font-family:monospace">468806</span></div></div>
+  <div class="bk-head">Ground transport</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Curreri shuttle · Sorrento → Naples Airport</div><span class="badge b-green">€72 paid</span></div><div class="bk-detail">Jun 26 · 12:00 noon · Piazza Giovanni B. de Curtis · Ref: <span style="font-family:monospace">195841-P1ZJAQ-I</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">GoOpti · Bergamo → MXP T1</div><span class="badge b-green">€120 paid</span></div><div class="bk-detail">Jun 30 · pickup 9:30 AM Via Don Carlo Botta 9 · drop-off MXP T1 11:00 · AY3855 tracked ✓ · Ref: <span style="font-family:monospace">3CW32747</span></div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Enterprise Premium · Aix TGV → MRS Airport</div><span class="badge b-amber">€207 at pickup</span></div><div class="bk-detail">Jun 28 9:00 AM → Jun 29 drop by 18:30 · Mercedes C-Class · Ref: <span style="font-family:monospace">C488937384</span> · bring Costco card + 2 credit cards</div></div>
+  <div class="bk-head">Activities</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Colosseum + Forum + Palatine Hill · 4 tickets</div><span class="badge b-green">€68 paid</span></div><div class="bk-detail">Jun 22 · 10:30 AM · English educational tour incl. · Ref: <span style="font-family:monospace">GPCOE36Q5V56ZN3K</span><br>⚠️ Small bags only — no backpacks, trolleys, glass bottles · Show passports at entry</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Guided walking tour · Rome</div><span class="badge b-green">confirmed</span></div><div class="bk-detail">Jun 21 · 17:00–20:00 · €270 · private tour · includes Pantheon tickets ✓</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Private boat tour · Amalfi Coast</div><span class="badge b-green">€750 confirmed</span></div><div class="bk-detail">Jun 24 · 9:30 AM–5:30 PM · Positano + Amalfi stops · swimming + snorkeling · food + drinks included · confirm pickup point (Marina Piccola or Marina Grande)</div></div>
+</div>
+
+<!-- RESTAURANTS TAB -->
+<div id="restaurants" class="mpane">
+  <div class="sec-label">Confirmed ✅</div>
+  <table class="rest-table">
+    <tr><th>Restaurant</th><th>City · Date</th><th>Time</th><th>Reference</th></tr>
+    <tr><td>Obicà Mozzarella Bar · La Rinascente 6F</td><td>Milan · Jun 20</td><td>18:00</td><td>#1719477729 · TheFork</td></tr>
+    <tr><td>Da Teo · Piazza dei Renzi</td><td>Rome · Jun 22</td><td>19:30</td><td>romatrattoriadateo@gmail.com · Teodoro Filippini</td></tr>
+    <tr><td>Taverna Azzurra · Via Marina Grande 166</td><td>Sorrento · Jun 23</td><td>19:00</td><td>+39 081 877 2510 · Vesuvius-view table requested</td></tr>
+    <tr><td>La Panetteria (penciled in)</td><td>Rome · Jun 21</td><td>~13:30</td><td>Walk-in · no reservation · near Trevi</td></tr>
+  </table>
+
+  <div class="sec-label">Book now 🔴</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Sora Margherita · Rome Jun 21</div><span class="badge b-red">book now</span></div><div class="bk-detail">Sunday lunch only 12:30–3 PM · Piazza delle Cinque Scole 30, Jewish Ghetto · +39 06 687 4216<br>9-table osteria since 1927 · no-sign red-curtain door · carciofi alla giudia, cacio e pepe with ricotta · cash only</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Taverna Azzurra · Sorrento Jun 23</div><span class="badge b-green">confirmed ✅</span></div><div class="bk-detail">19:00 · Via Marina Grande 166 · +39 081 877 2510<br>Beachfront since 1930 · views of Vesuvius · crab ravioli, allo scoglio, mixed fried fish</div></div>
+
+  <div class="sec-label">Book this week 🟡</div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Les Galinas · Aix-en-Provence</div><span class="badge b-amber">book this week</span></div><div class="bk-detail">Jun 26 or 27 evening · Michelin Bib Gourmand · bistronomic Provençal · TheFork</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Le Patio · Aix-en-Provence</div><span class="badge b-amber">book this week</span></div><div class="bk-detail">Jun 27 evening · hidden courtyard in old town · seasonal market cuisine · TheFork</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Les Grandes Gueules · Aix-en-Provence</div><span class="badge b-amber">book this week</span></div><div class="bk-detail">Jun 28 evening · Bib Gourmand · three young chefs · monthly changing menu · TheFork</div></div>
+  <div class="bk-card"><div class="bk-top"><div class="bk-name">Armando al Pantheon · Rome</div><span class="badge b-gray">optional</span></div><div class="bk-detail">Jun 21 evening (after tour + Trastevere) · armandoalpantheon.it · +39 06 6880 3034<br>14 tables · legendary carbonara · steps from Pantheon</div></div>
+
+  <div class="sec-label">Walk-in / no reservation needed</div>
+  <div class="card">
+    <div class="row"><div class="l">Bar Ercolano · Sorrento · Piazza Tasso</div><div class="r">Best granita di limone in Sorrento</div></div>
+    <div class="row"><div class="l">L'Antica Pizzeria da Michele · Naples</div><div class="r">Jun 23 lunch · queue only · no reservations</div></div>
+    <div class="row"><div class="l">Mercato di Testaccio · Rome</div><div class="r">Jun 22 lunch · closes 2:30 PM</div></div>
+    <div class="row"><div class="l">Forno Campo de' Fiori · Rome</div><div class="r">Pizza bianca warm from oven</div></div>
+    <div class="row"><div class="l">Trattoria Il Mulino · Amalfi</div><div class="r">Jun 25 lunch · up the staircase streets</div></div>
+    <div class="row"><div class="l">Boulangerie Weibel · Aix</div><div class="r">Best croissants in Aix · go before 8:30 AM</div></div>
+    <div class="row"><div class="l">Bar del Tasso · Bergamo Città Alta</div><div class="r">Jun 30 morning · last Italian coffee · Piazza Vecchia</div></div>
+  </div>
+</div>
+
+<!-- ACTIONS TAB -->
+<div id="actions" class="mpane">
+  <div class="sec-label">Resolved ✅</div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Passport info added for all 4 passengers (AA HGSPIM)</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Botta 9 — self check-in confirmed, no issue arriving 11 PM</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Enterprise car — dropping at MRS by 18:30 (not 20:00)</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">GoOpti BGY → MXP booked · Ref 3CW32747 · €119.80 · 9:30 AM Jun 30</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Colosseum booked · Jun 22 10:30 AM · Ref GPCOE36Q5V56ZN3K · English tour included</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Obicà Mozzarella Bar · Milan Jun 20 18:00 · Res #1719477729</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Da Teo · Rome Jun 22 19:30 · confirmed with Teodoro Filippini</div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Guided walking tour Rome · Jun 21 17:00–20:00 · Pantheon tickets included</div></div>
+
+  <div class="sec-label">Book now 🔴</div>
+
+  <div class="action-item"><div class="adot red">!</div><div class="atext">Sora Margherita · Rome Jun 21 lunch<div class="asub">+39 06 687 4216 · Sunday lunch only 12:30–3 PM · 9 tables — book ahead</div></div></div>
+  <div class="action-item"><div class="adot done">✓</div><div class="atext">Taverna Azzurra · Sorrento Jun 23 · 19:00 · confirmed ✅</div></div>
+
+  <div class="sec-label">Book this week 🟡</div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Aix restaurants — Les Galinas, Le Patio, Les Grandes Gueules<div class="asub">TheFork · one per evening Jun 26–28</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Withdraw €500–600 cash at MXP arrivals ATM on Jun 20<div class="asub">Milan apartment cash only (€350) + city taxes ~€103 + tips + markets</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Download all boarding passes and tickets offline before travel<div class="asub">AA app · Ryanair app · Trenitalia app · GoOpti · Campania Express PDF · Curreri PDF</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Online check-in for both Ryanair flights — mandatory<div class="asub">Ryanair app ≥2 hrs before · airport check-in costs €55/person</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Download transport apps: Free Now + itTaxi (Italy) · Uber update + Bolt (France)</div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Notify bank and credit cards — Italy + France Jun 19–30<div class="asub">Prevent fraud blocks on cards abroad</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Buy money belts — one per adult minimum<div class="asub">Eagle Creek or Rick Steves · ~$20–30 · carry passports and cash safely</div></div></div>
+  <div class="action-item"><div class="adot amber">~</div><div class="atext">Verify all 4 passports valid through December 30, 2026</div></div>
+</div>
+
+<!-- COSTS TAB -->
+<div id="costs" class="mpane">
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Total booked</div><div class="val">$11,264</div><div class="sub">excl. restaurants</div></div>
+    <div class="metric"><div class="label">Estimated all-in</div><div class="val">~$13,000</div><div class="sub">incl. food + activities</div></div>
+    <div class="metric"><div class="label">Per person</div><div class="val">~$3,250</div><div class="sub">all-in estimate</div></div>
+    <div class="metric"><div class="label">City taxes (cash)</div><div class="val">€103</div><div class="sub">paid at properties</div></div>
+  </div>
+  <div class="sec-label">Spend by category</div>
+  <div style="margin-bottom:18px">
+    <div class="bar-row"><div class="blabel">Hotels</div><div class="btrack"><div class="bfill" style="width:100%;background:#4f46e5"></div></div><div class="bval">$3,482</div></div>
+    <div class="bar-row"><div class="blabel">AA flights</div><div class="btrack"><div class="bfill" style="width:88%;background:#0891b2"></div></div><div class="bval">$3,076</div></div>
+    <div class="bar-row"><div class="blabel">Ryanair</div><div class="btrack"><div class="bfill" style="width:23%;background:#2563eb"></div></div><div class="bval">$808</div></div>
+    <div class="bar-row"><div class="blabel">Car + Uber</div><div class="btrack"><div class="bfill" style="width:9%;background:#d97706"></div></div><div class="bval">$249</div></div>
+    <div class="bar-row"><div class="blabel">Rail + ground</div><div class="btrack"><div class="bfill" style="width:8%;background:#f59e0b"></div></div><div class="bval">$363</div></div>
+    <div class="bar-row"><div class="blabel">Activities</div><div class="btrack"><div class="bfill" style="width:4%;background:#dc2626"></div></div><div class="bval">$73</div></div>
+    <div class="bar-row"><div class="blabel">City taxes</div><div class="btrack"><div class="bfill" style="width:3%;background:#9ca3af"></div></div><div class="bval">$111</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-label">Hotel payment schedule</div>
+  <div class="card">
+    <div class="row"><div class="l">May 28 · Castello Duomo charge</div><div class="r">€329 card</div></div>
+    <div class="row"><div class="l">Jun 7 · Suite Old Town Sorrento charge</div><div class="r">€1,153 card</div></div>
+    <div class="row"><div class="l">Jun 14 · Trevi Elite Rome charge</div><div class="r">€636 card</div></div>
+    <div class="row"><div class="l">Jun 20 · Milan apartment (cash at check-in)</div><div class="r">€329 + €19 tax</div></div>
+    <div class="row"><div class="l">Jun 26 · Aix check-in (card + cash tax)</div><div class="r">€908 + €19.62 tax</div></div>
+    <div class="row"><div class="l">Jun 26 · Botta 9 charge date</div><div class="r">€198 card</div></div>
+  </div>
+  <div class="total-box">
+    <div class="trow"><div>AA/Finnair flights</div><div class="r">$3,076</div></div>
+    <div class="trow"><div>Ryanair flights</div><div class="r">$808</div></div>
+    <div class="trow"><div>Hotels (10 nights)</div><div class="r">$3,482</div></div>
+    <div class="trow"><div>Rail + ground transport</div><div class="r">$363</div></div>
+    <div class="trow"><div>Car rental + Uber</div><div class="r">$249</div></div>
+    <div class="trow"><div>Colosseum tickets</div><div class="r">$73</div></div>
+    <div class="trow"><div>Private Rome walking tour</div><div class="r">$292</div></div>
+    <div class="trow"><div>Private Amalfi boat tour</div><div class="r">$810</div></div>
+    <div class="trow"><div>City taxes (cash)</div><div class="r">$111</div></div>
+    <div class="trow big"><div>Total booked</div><div class="r">$11,264</div></div>
+    <div style="font-size:11px;color:#999;text-align:right;margin-top:6px">Still to add: Pompeii ~$65 · 3 ferries ~$200 · restaurants ~$600–800 · activities + spending ~$800</div>
+  </div>
+</div>
+
+<!-- TRANSPORT TAB -->
+<div id="transport" class="mpane">
+  <div class="callout">Italy and France are completely different for ride-sharing. Uber works like the US in France (full UberX). In Italy it's Uber Black only (expensive) — use local taxi apps instead. Download all four apps before leaving home.</div>
+  <div class="sec-label">Apps to download before departure</div>
+  <div class="app-dl-grid">
+    <div class="app-dl-card"><div class="app-dl-name">Free Now</div><div class="app-dl-sub">Best cross-border app — Italy AND France. Licensed taxis, fare estimate upfront. Apple Pay accepted.</div><span class="app-dl-where">Italy + France · Download now</span></div>
+    <div class="app-dl-card"><div class="app-dl-name">itTaxi</div><div class="app-dl-sub">Italy's largest official taxi network. Nationwide including Bergamo. No surge pricing. English interface.</div><span class="app-dl-where">Italy only · Download now</span></div>
+    <div class="app-dl-card"><div class="app-dl-name">Uber</div><div class="app-dl-sub">Update and confirm Apple Pay. Full UberX in Aix + Marseille. Uber Black only in Milan + Rome. Not in Naples or Sorrento.</div><span class="app-dl-where">France main · Italy limited</span></div>
+    <div class="app-dl-card"><div class="app-dl-name">Bolt</div><div class="app-dl-sub">Cheaper than Uber in France. Good for Marseille/Aix area. Limited/unreliable in Italy.</div><span class="app-dl-where">France only · Optional</span></div>
+  </div>
+  <div class="sec-label">Quick reference by city</div>
+  <div class="card">
+    <div class="row"><div class="l">MXP → Milan city</div><div class="r">Malpensa Express train €13 — not a taxi (€80+)</div></div>
+    <div class="row"><div class="l">Milan</div><div class="r">Walking + Free Now / itTaxi · Uber Black available but pricey</div></div>
+    <div class="row"><div class="l">Rome</div><div class="r">Walking + Metro Line B + itTaxi / Free Now · NO regular Uber</div></div>
+    <div class="row"><div class="l">Naples (2-hr stop)</div><div class="r">Walking only · itTaxi if needed · NO Uber</div></div>
+    <div class="row"><div class="l">Sorrento</div><div class="r">Walking + local radio taxi (ask host) · Circumvesuviana for Pompeii · Ferry for Amalfi</div></div>
+    <div class="row"><div class="l">Aix-en-Provence</div><div class="r">Walking + Uber UberX ✅ + Free Now · Pre-book Jun 28 via Uber Reserve · Apple Pay ✅</div></div>
+    <div class="row"><div class="l">Marseille area</div><div class="r">Navette shuttle → Aix €10/person · Uber ✅ · Bolt ✅</div></div>
+    <div class="row"><div class="l">Bergamo BGY</div><div class="r">Airport taxi rank ~€20 · itTaxi to pre-book · GoOpti booked for Jun 30</div></div>
+  </div>
+  <div class="sec-label">Key reference numbers</div>
+  <div class="card">
+    <div class="row"><div class="l">AA confirmation</div><div class="r" style="font-family:monospace;font-size:12px">HGSPIM</div></div>
+    <div class="row"><div class="l">Finnair confirmation</div><div class="r" style="font-family:monospace;font-size:12px">8MZOLA</div></div>
+    <div class="row"><div class="l">Ryanair NAP→MRS</div><div class="r" style="font-family:monospace;font-size:12px">L3G8XA</div></div>
+    <div class="row"><div class="l">Ryanair MRS→BGY</div><div class="r" style="font-family:monospace;font-size:12px">D2PZMN</div></div>
+    <div class="row"><div class="l">GoOpti transfer</div><div class="r" style="font-family:monospace;font-size:12px">3CW32747</div></div>
+    <div class="row"><div class="l">Enterprise car</div><div class="r" style="font-family:monospace;font-size:12px">C488937384</div></div>
+    <div class="row"><div class="l">Colosseum tickets</div><div class="r" style="font-family:monospace;font-size:12px">GPCOE36Q5V56ZN3K</div></div>
+    <div class="row"><div class="l">Sorrento property</div><div class="r">+39 333 986 7166</div></div>
+    <div class="row"><div class="l">Taverna Azzurra</div><div class="r">+39 081 877 2510</div></div>
+    <div class="row"><div class="l">Sora Margherita</div><div class="r">+39 06 687 4216</div></div>
+    <div class="row"><div class="l">Da Teo</div><div class="r">romatrattoriadateo@gmail.com</div></div>
+    <div class="row"><div class="l">GoOpti refund</div><div class="r" style="font-size:11px">fullrefund@goopti.com</div></div>
+  </div>
+  <div class="sec-label">Cash needed — withdraw €500–600 at MXP ATM on arrival</div>
+  <div class="card">
+    <div class="row"><div class="l">Milan apartment + city tax</div><div class="r">€348</div></div>
+    <div class="row"><div class="l">Rome city tax</div><div class="r">€40</div></div>
+    <div class="row"><div class="l">Sorrento city tax</div><div class="r">€24</div></div>
+    <div class="row"><div class="l">Aix city tax</div><div class="r">€19.62</div></div>
+    <div class="row"><div class="l">Tips + markets + small vendors</div><div class="r">~€80</div></div>
+  </div>
+  <div class="sec-label">Liquids by airport</div>
+  <div class="g2">
+    <div class="tc"><div class="tc-title">STL + PHL (US)</div><div class="tc-body">3-1-1 rule · 100ml · clear zip bag · laptops out at security</div></div>
+    <div class="tc"><div class="tc-title">Milan MXP T1</div><div class="tc-body">2L rule · full-size OK · electronics stay in bag · carry limoncello home!</div></div>
+    <div class="tc"><div class="tc-title">Naples NAP</div><div class="tc-body">100ml still applies · full bottles in checked bags only</div></div>
+    <div class="tc"><div class="tc-title">Marseille MRS</div><div class="tc-body">100ml still applies · full bottles in checked bags only</div></div>
+  </div>
+</div>
+
+<script>
+function msw(id,btn){
+  document.querySelectorAll('.mpane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function dsw(id,btn){
+  document.querySelectorAll('.dpane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.day-btn').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function tog(hd){
+  const body=hd.nextElementSibling;
+  const chev=hd.querySelector('.chev');
+  const open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+</script>
+</body>
+</html>
